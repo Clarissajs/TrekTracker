@@ -93,6 +93,7 @@ class Home extends React.Component {
   }
 
   render() {
+    console.log('At Home loggedIn:', this.props.isLoggedIn);
     return (
       <div>
         <div className = 'Gmap col-wide'>
