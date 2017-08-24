@@ -3,3 +3,7 @@ node_modules
 /client/dist/bundle.js
 
 /passport/config.json
+
+/package-lock.json
+
+/database/config.json
