@@ -26,9 +26,9 @@ class App extends React.Component {
   render() {
     console.log('app component loggedIn is:', this.state.isLoggedIn);
     return (
+      <div>
+        <Nav isLoggedIn={this.state.isLoggedIn} />
       <div className='content-wrap'>
-        <div >
-          <Nav isLoggedIn={this.state.isLoggedIn} />
           <Switch>
             <Route exact path='/'>
               <Home isLoggedIn={this.state.isLoggedIn}/>
