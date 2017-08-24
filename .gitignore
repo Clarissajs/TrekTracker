@@ -3,5 +3,3 @@ node_modules
 /client/dist/bundle.js
 
 /passport/config.json
-
-/database/config.json
