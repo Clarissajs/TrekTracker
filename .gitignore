@@ -4,6 +4,6 @@ node_modules
 
 /passport/config.json
 
-/package-lock.json
+package-lock.json
 
 /database/config.json
