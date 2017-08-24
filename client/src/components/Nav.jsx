@@ -37,6 +37,12 @@ class Navbar extends React.Component {
   }
 
   render () {
+    const isLoggedIn = this.props.isLoggedIn;
+    let logout = null;
+    if (isLoggedIn) {
+      logout = <MenuItem onClick={this.redirectTo.bind(this, '/logout')}>Logout</MenuItem>;
+    }
+    console.log('nav isLoggedIn is', isLoggedIn);
     return (
       <div>
         <AppBar
@@ -46,7 +52,7 @@ class Navbar extends React.Component {
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
           <MenuItem onClick={this.redirectTo.bind(this, '/')}>Home</MenuItem>
           <MenuItem onClick={this.redirectTo.bind(this, '/profile')}>Profile</MenuItem>
-          <MenuItem onClick={this.redirectTo.bind(this, '/logout')}>Logout</MenuItem>
+          {logout}
         </Drawer>
       </div>
     )
