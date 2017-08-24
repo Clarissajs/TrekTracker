@@ -28,6 +28,7 @@ class User extends React.Component {
   getCurrentUser () {
     return axios.get('/api/currentuser')
     .then((response) => {
+      this.props.setLoggedIn();
       this.setState({userEmail: response.data.email});
     });
   }
