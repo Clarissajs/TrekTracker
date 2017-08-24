@@ -13,14 +13,25 @@ axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false
+    }
+    this.setLoggedIn = this.setLoggedIn.bind(this);
+  }
+  setLoggedIn() {
+    this.setState({isLoggedIn: true});
+  }
   render() {
+    console.log('app component loggedIn is:', this.state.isLoggedIn);
     return (
-      <div>
-        <Nav />
-        <div className='content-wrap'>
+      <div className='content-wrap'>
+        <div >
+          <Nav isLoggedIn={this.state.isLoggedIn} />
           <Switch>
             <Route exact path='/'>
-              <Home />
+              <Home isLoggedIn={this.state.isLoggedIn}/>
             </Route>
             <Route exact path='/login'>
               <Login/>
@@ -29,7 +40,7 @@ class App extends React.Component {
             <User/>
             </Route>
             <Route exact path='/profile'>
-              <User currentUser={true} />
+              <User setLoggedIn={this.setLoggedIn} currentUser={true} />
             </Route>
             <Route exact path='/trail'>
               <Trail/>
