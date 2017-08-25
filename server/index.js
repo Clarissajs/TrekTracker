@@ -17,9 +17,11 @@ var app = express();
 // Sets port to env variable for deployment
 app.set('port', process.env.PORT || 3000);
 
-// Activates Google OAuth passport strategy
+// Activate Google OAuth passport strategy
 require('../passport/google-auth-strategy.js')(passport);
 
+// Activate Facebook OAuth passport strategy
+require('../passport/facebook-auth-strategy.js')(passport);
 // ---- MIDDLEWARE ----
 // Cookie parse middleware
 app.use(cookieParser());
