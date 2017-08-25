@@ -20,12 +20,22 @@ let isNotLoggedIn = (req, res, next) => {
 
 
 // Needed for Google OAuth
-router.get('/auth/google', passport.authenticate('google', {
-  scope: ['email', 'profile']
-}));
-router.get('/auth/google/callback', passport.authenticate('google', {
-  successRedirect: '/',
-  failureRedirect: '/login'
+// router.get('/auth/google', passport.authenticate('google', {
+//   scope: ['email', 'profile']
+// }));
+// router.get('/auth/google/callback', passport.authenticate('google', {
+//   successRedirect: '/',
+//   failureRedirect: '/login'
+// }));
+
+// route for facebook authentication and login
+router.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+// handle the callback after facebook has authenticated the user
+router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect : '/',
+    failureRedirect : '/login'
 }));
 
 // Destroys current OAuth session
