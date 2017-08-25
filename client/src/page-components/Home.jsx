@@ -56,7 +56,7 @@ class Home extends React.Component {
     })
     .then(res => {
       //Once we get trails from our particular area, we can then create markers on the map.
-      res.data.places.forEach((trail) => {
+      res.data.forEach((trail) => {
         /*
         We are going to set an array containing all of the markers.
         The spread operator is used as a type of concat so that markers don't overwrite themselves.
@@ -64,17 +64,23 @@ class Home extends React.Component {
         const nextMarkers = [
           ...this.state.markers,
           {
-            /*
-            We set an object with some information that we are going to need later one.
-            In order to populate the map/list we use information passed in here.
-            */
-            position: {lat: trail.lat, lng: trail.lon},
+
+            // We set an object with some information that we are going to need later on.
+            // In order to populate the map/list we use information passed in here.
+
+            position: {lat: trail.starting_trailhead.latitude, lng: trail.starting_trailhead.longitude},
             name: trail.name,
-            city: trail.city,
-            state: trail.state,
-            //showInfo toggles the marker infowinow box. It is set to false right now, when the marker is clicked it will toggle to true.
+
+            // testing new information from TransitAndTrails API with existing prop names
+            city: trail.intensity,
+            state: `${trail.length_miles.toFixed(2)} mi`,
+            // intensity: trail.intensity,
+            // distance: trail.length_miles.toFixed(2),
+            duration: trail.duration,
+
+            //showInfo toggles the marker info window box. It is set to false right now, when the marker is clicked it will toggle to true.
             showInfo: false,
-            trailId: trail.unique_id
+            trailId: trail.id
           },
         ];
         this.setState({

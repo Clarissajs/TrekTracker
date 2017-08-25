@@ -3,3 +3,4 @@ node_modules
 /client/dist/bundle.js
 
 /passport/config.json
+/server/foreign-apis/config.json

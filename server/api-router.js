@@ -37,16 +37,16 @@ router.get('/trails', (req, res) => {
   let long = `${req.query.lng || -104}`;
   let radius = `${req.query.radius || 100}`;
   let limit = `${req.query.radius || 25}`;
-  getTrailsByLoc(lat, long, radius, limit, (err, data) => {
-    if(err) {
-      res.end(JSON.stringify(err));
-    } else {
-      data.places.forEach(trail => {
-        db.createTrail(trail.unique_id, trail.name, trail.directions, trail.lat, trail.lon);
+
+  getTrailsByLoc(lat, long, radius, limit)
+    .then(response => {
+      console.log('sample data set:', response.data[0])
+      response.data.forEach(trail => {
+        db.createTrail(trail.id, trail.name, trail.intensity, trail.starting_trailhead.latitude, trail.starting_trailhead.longitude);
       });
-      res.end(JSON.stringify(data));
-    }
-  })
+      res.send(response.data)
+    })
+    .catch(err => console.log('error in api-router', err));
 });
 
 router.get('/*', (req, res) => {
