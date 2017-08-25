@@ -1,7 +1,5 @@
 var models = require('./models');
 
-
-
 module.exports.getUserByEmail = (email) => {
   return models.users.findOne({
     where: {email}

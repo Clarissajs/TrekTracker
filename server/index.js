@@ -38,6 +38,20 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// grab userdata from the database
+app.get('/user', (req, res) => {
+  db.getUserByEmail(req.body.email)
+  .then(user => {
+    res.send(user);
+  })
+  .catch(error => {
+    console.log(error);
+    res.send(error);
+  })
+});
+
 // Setup routes
 app.use('/api', apiRouter);
 app.use('/', authRouter);

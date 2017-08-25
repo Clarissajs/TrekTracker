@@ -2,6 +2,26 @@ import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
+import helpers from '../helpers/helpers';
+import axios from 'axios';
+
+var styles = {
+  borderRadius: '50%'
+}
+
+var user = {};
+
+  axios.get('/api/currentuser')
+  .then(response => {
+      console.log('we have access ot apicurrent user', response);
+      user.displayName = `${response.data.firstname} ${response.data.lastname}`;
+      user.imgUrl = response.data.phtoUrl;
+  })
+  .catch(error => {
+    console.log(error);
+  });
+
+
 
 class Navbar extends React.Component {
   constructor (props) {
@@ -42,12 +62,17 @@ class Navbar extends React.Component {
         <AppBar
           title="TrekTracker"
           onLeftIconButtonTouchTap={this.handleToggle}
+          iconElementRight= {(<div>
+            {user.displayName}
+            <img src={user.imgUrl}style={styles}/>
+            </div>)}
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
           <MenuItem onClick={this.redirectTo.bind(this, '/')}>Home</MenuItem>
           <MenuItem onClick={this.redirectTo.bind(this, '/profile')}>Profile</MenuItem>
           <MenuItem onClick={this.redirectTo.bind(this, '/logout')}>Logout</MenuItem>
         </Drawer>
+        <button> </button>
       </div>
     )
   }
