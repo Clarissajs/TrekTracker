@@ -17,9 +17,11 @@ var app = express();
 // Sets port to env variable for deployment
 app.set('port', process.env.PORT || 3000);
 
-// Activates Google OAuth passport strategy
+// Activate Google OAuth passport strategy
 require('../passport/google-auth-strategy.js')(passport);
 
+// Activate Facebook OAuth passport strategy
+require('../passport/facebook-auth-strategy.js')(passport);
 // ---- MIDDLEWARE ----
 // Cookie parse middleware
 app.use(cookieParser());
@@ -37,6 +39,20 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// grab userdata from the database
+app.get('/user', (req, res) => {
+  db.getUserByEmail(req.body.email)
+  .then(user => {
+    res.send(user);
+  })
+  .catch(error => {
+    console.log(error);
+    res.send(error);
+  })
+});
 
 // Setup routes
 app.use('/api', apiRouter);
