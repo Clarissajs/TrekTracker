@@ -13,7 +13,7 @@ var txtStyle = {
   // fontSize: '100%',
   // lineHeight: 1.6,
   color: 'white',
-  align: 'left'
+  textAlign: 'right'
 }
 
 class Navbar extends React.Component {
@@ -71,9 +71,10 @@ class Navbar extends React.Component {
           title="TrekTracker"
           onLeftIconButtonTouchTap={this.handleToggle}
           iconElementRight= {(<div>
-            <div style={txtStyle}>  {this.state.user.displayName} </div>
+            <div style={txtStyle}>  {this.state.user.displayName}
             {console.log(this.state.user.imgUrl)}
-            <img src={this.state.user.imgUrl}style={styles}/>
+              <img src={this.state.user.imgUrl}style={styles}/>
+            </div>
             </div>)}
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
