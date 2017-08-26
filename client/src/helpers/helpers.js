@@ -13,6 +13,14 @@ const fileTypes = [
   'image/png'
 ]
 
+module.exports.grabUserData = function(){
+  return axios.get(`https://www.googleapis.com/plus/v1/people/me`)
+  .then(response => {
+    console.log('here is the response from my get qurest ', response.data);
+    return response.data;
+  })
+}
+
 //check to see if the file uploaded to the DOM matches
 //the specified file types.
 const isValidFileType = function (file) {

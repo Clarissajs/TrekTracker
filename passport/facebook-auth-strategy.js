@@ -45,6 +45,7 @@ module.exports = (passport) => {
             newUser.firstname = profile.name.givenName;
             newUser.lastname = profile.name.familyName;
             newUser.email = profile.emails[0].value;
+            newUser.photoUrl = profile.photos[0].value;
             newUser.save((err) => {
               if (err) {
                 console.log('Facebook newUser save err is', err);

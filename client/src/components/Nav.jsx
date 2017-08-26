@@ -2,12 +2,29 @@ import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
+import helpers from '../helpers/helpers';
+import axios from 'axios';
+
+var styles = {
+  borderRadius: '50%',
+  height: 50
+}
+var txtStyle = {
+  // fontSize: '100%',
+  // lineHeight: 1.6,
+  color: 'white',
+  textAlign: 'right'
+}
 
 class Navbar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      user: {
+        displayName: '',
+        imgUrl: 'https://www.shipperoo.com/images/profile-default.jpg'
+      }
     }
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -17,6 +34,17 @@ class Navbar extends React.Component {
     if (this.props.setClose) {
       this.props.setClose(this.handleClose);
     }
+  }
+  componentDidMount() {
+    axios.get('/api/currentuser')
+    .then(response => {
+        this.setState({user: {displayName: response.data.firstname ?  `${response.data.firstname} ${response.data.lastname}` : this.state.user.displayName,
+                              imgUrl: response.data.photoUrl || this.state.user.imgUrl}
+        });
+      })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   handleToggle () {
@@ -42,6 +70,12 @@ class Navbar extends React.Component {
         <AppBar
           title="TrekTracker"
           onLeftIconButtonTouchTap={this.handleToggle}
+          iconElementRight= {(<div>
+            <div style={txtStyle}>  {this.state.user.displayName}
+            {console.log(this.state.user.imgUrl)}
+              <img src={this.state.user.imgUrl}style={styles}/>
+            </div>
+            </div>)}
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
           <MenuItem onClick={this.redirectTo.bind(this, '/')}>Home</MenuItem>

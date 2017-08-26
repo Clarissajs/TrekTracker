@@ -36,6 +36,10 @@ var Users = sequelize.define('users', {
     validate: {
       isEmail: true
     }
+  },
+  photoUrl: {
+    type: Sequelize.STRING,
+    notEmpty: true
   }
 });
 models.users = Users;
