@@ -6,28 +6,25 @@ import helpers from '../helpers/helpers';
 import axios from 'axios';
 
 var styles = {
-  borderRadius: '50%'
+  borderRadius: '50%',
+  height: 50
 }
-
-var user = {};
-
-  axios.get('/api/currentuser')
-  .then(response => {
-      console.log('we have access ot apicurrent user', response);
-      user.displayName = `${response.data.firstname} ${response.data.lastname}`;
-      user.imgUrl = response.data.phtoUrl;
-  })
-  .catch(error => {
-    console.log(error);
-  });
-
-
+var txtStyle = {
+  // fontSize: '100%',
+  // lineHeight: 1.6,
+  color: 'white',
+  align: 'left'
+}
 
 class Navbar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
+      user: {
+        displayName: '',
+        imgUrl: 'https://www.shipperoo.com/images/profile-default.jpg'
+      }
     }
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -37,6 +34,17 @@ class Navbar extends React.Component {
     if (this.props.setClose) {
       this.props.setClose(this.handleClose);
     }
+  }
+  componentDidMount() {
+    axios.get('/api/currentuser')
+    .then(response => {
+        this.setState({user: {displayName: response.data.firstname ?  `${response.data.firstname} ${response.data.lastname}` : this.state.user.displayName,
+                              imgUrl: response.data.photoUrl || this.state.user.imgUrl}
+        });
+      })
+    .catch(error => {
+      console.log(error);
+    });
   }
 
   handleToggle () {
@@ -63,8 +71,9 @@ class Navbar extends React.Component {
           title="TrekTracker"
           onLeftIconButtonTouchTap={this.handleToggle}
           iconElementRight= {(<div>
-            {user.displayName}
-            <img src={user.imgUrl}style={styles}/>
+            <div style={txtStyle}>  {this.state.user.displayName} </div>
+            {console.log(this.state.user.imgUrl)}
+            <img src={this.state.user.imgUrl}style={styles}/>
             </div>)}
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
@@ -72,7 +81,6 @@ class Navbar extends React.Component {
           <MenuItem onClick={this.redirectTo.bind(this, '/profile')}>Profile</MenuItem>
           <MenuItem onClick={this.redirectTo.bind(this, '/logout')}>Logout</MenuItem>
         </Drawer>
-        <button> </button>
       </div>
     )
   }
