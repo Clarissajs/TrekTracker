@@ -1,7 +1,5 @@
 var models = require('./models');
 
-
-
 module.exports.getUserByEmail = (email) => {
   return models.users.findOne({
     where: {email}
@@ -142,6 +140,24 @@ module.exports.getPostsByTrailId = (id) => {
     where: {trail_id: id}
   })
   .then((posts) => {
+    console.log('POSTS', posts)
+    if (posts.length === 0) {
+      return models.trails.findOne({
+        where: {id}
+      })
+      .then(trail => {
+        let res = [];
+        let resObj = {};
+        resObj.trail = {
+          id: trail.dataValues.id,
+          name: trail.dataValues.name,
+          directions: trail.dataValues.directions
+        };
+        res.push(resObj)
+        return res;
+      })
+    }
+
     for (let i = 0; i < posts.length; i++) {
       posts[i].latitude = parseFloat(posts[i].latitude);
       posts[i].longitude = parseFloat(posts[i].longitude);
