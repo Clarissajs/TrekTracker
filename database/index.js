@@ -1,7 +1,5 @@
 var models = require('./models');
 
-
-
 module.exports.getUserByEmail = (email) => {
   return models.users.findOne({
     where: {email}
@@ -77,8 +75,6 @@ module.exports.createTrail = (id, name, directions = '', latitude = 0, longitude
   });
 };
 
-
-
 // posterData can be either a user ID or a user email (REMEMBER: user IDs are STRINGS, NOT numbers)
 // trailData can be either a trail ID or a trail name
 // posterDataType should either be 'id' or 'email'
@@ -144,12 +140,35 @@ module.exports.getPostsByTrailId = (id) => {
     where: {trail_id: id}
   })
   .then((posts) => {
+    console.log('POSTS', posts)
+    if (posts.length === 0) {
+      return models.trails.findOne({
+        where: {id}
+      })
+      .then(trail => {
+        let res = [];
+        let resObj = {};
+        resObj.trail = {
+          id: trail.dataValues.id,
+          name: trail.dataValues.name,
+          directions: trail.dataValues.directions
+        };
+        res.push(resObj)
+        return res;
+      })
+    }
+
     for (let i = 0; i < posts.length; i++) {
       posts[i].latitude = parseFloat(posts[i].latitude);
       posts[i].longitude = parseFloat(posts[i].longitude);
       posts[i].poster_user_id = parseInt(posts[i].poster_user_id);
     }
-    return replaceReferenceModelIdsWithModels(posts, 'poster_user_id', models.users, 'poster');
+
+    // the below function queries the user and trails tables (which could also be done using include associations in Sequelize)
+    return replaceReferenceModelIdsWithModels(posts, 'poster_user_id', models.users, 'poster')
+    .then((newArray) => {
+        return replaceReferenceModelIdsWithModels(newArray, 'trail_id', models.trails, 'trail');
+    })
   });
 };
 
