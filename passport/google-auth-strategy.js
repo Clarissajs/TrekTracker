@@ -4,7 +4,7 @@ let users = require('../database/models.js').users;
 let config;
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'test') {
-  config = require('./config.json');
+  config = require('./config.json').googleAuth;
 }
 
 module.exports = (passport) => {
@@ -17,11 +17,10 @@ module.exports = (passport) => {
     },
     (request, token, refreshToken, profile, done) => {
       process.nextTick(() => {
-        console.log('BATMAN', profile);
         users.findOne(
           {
             where: {
-              id: profile.id
+              email: profile.emails[0].value
             }
           }
         ).then((user) => {
@@ -37,6 +36,7 @@ module.exports = (passport) => {
             newUser.photoUrl = profile.photos[0].value;
             newUser.save((err) => {
               if (err) {
+                console.log('Google newUser save err is', err);
                 throw err;
               }
               return done(null, newUser);
