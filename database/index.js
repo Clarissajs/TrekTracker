@@ -148,6 +148,8 @@ module.exports.getPostsByTrailId = (id) => {
       .then(trail => {
         let res = [];
         let resObj = {};
+        resObj.latitude = parseFloat(trail.dataValues.latitude)
+        resObj.longitude = parseFloat(trail.dataValues.longitude)
         resObj.trail = {
           id: trail.dataValues.id,
           name: trail.dataValues.name,
