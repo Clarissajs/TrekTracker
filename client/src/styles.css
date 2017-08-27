@@ -46,6 +46,17 @@ body {
   margin: 10px 0;
 }
 
+.trail-left {
+  /*float: left;*/
+  margin: 0 1.5%;
+  width: 50%;
+}
+
+.trail-right {
+  /*float: right;*/
+  margin: 0 1.5%;
+  width: 50%;
+}
 /* Shared */
 .loginBtn {
   box-sizing: border-box;
