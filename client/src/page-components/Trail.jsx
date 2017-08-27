@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import { Link } from 'react-router-dom'
 import Posts from '../components/Posts.jsx';
 import Upload from '../components/Upload.jsx';
+import TrailMap from '../components/TrailMap.jsx';
 
 class Trail extends React.Component {
   constructor(props) {
@@ -14,7 +15,10 @@ class Trail extends React.Component {
       trailDescription: null,
       posts: [],
       currentUser: null,
-      noPosts: false
+      mapCenter: {
+       lat: 37.783697,
+       lng: -122.408966
+      }
     };
 
     axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
@@ -23,15 +27,16 @@ class Trail extends React.Component {
       if (response.data[0].poster) {
         this.setState({
           posts: response.data,
-          trailName: response.data[0].trail.name,
-          trailDescription: response.data[0].trail.directions,
         });
-      } else {
-        this.setState({
-          trailName: response.data[0].trail.name,
-          trailDescription: response.data[0].trail.directions,
-        })
       }
+      this.setState({
+        trailName: response.data[0].trail.name,
+        trailDescription: response.data[0].trail.directions,
+        mapCenter: {
+          lat: response.data[0].latitude,
+          lng: response.data[0].longitude
+        }
+      })
     });
 
     axios.get('/api/currentuser')
@@ -47,12 +52,17 @@ class Trail extends React.Component {
       <div>
         <Paper>
           <h1>{this.state.trailName}</h1>
-          <div>
+          <div className='trail-left'>
             <h3>{this.state.trailDescription}</h3>
           </div>
-          <div>
+          <div className='trail-right'>
+            <h3>Testing map</h3>
+            <TrailMap
+              mapCenter={this.state.mapCenter}
+            />
           </div>
         </Paper>
+
         {this.state.currentUser ? <Upload /> : <div><Link to='/login'>Login to upload your photos</Link></div>}
         <Posts posts={this.state.posts}/>
       </div>
