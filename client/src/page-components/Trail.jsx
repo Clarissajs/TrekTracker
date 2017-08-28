@@ -53,14 +53,14 @@ class Trail extends React.Component {
       <Container>
         <Row>
           <Col md="6">
-            <Paper>
-              <h1>{this.state.trailName}</h1>
-              <h3>{this.state.trailDescription}</h3>
+            <Paper className='trail-description'>
+              <h2>{this.state.trailName}</h2>
+              <hr/>
+              <p>{this.state.trailDescription}</p>
             </Paper>
           </Col>
           <Col md="6">
-            <Paper className='trail-right'>
-              <h3>Testing map</h3>
+            <Paper className='trail-map'>
               <TrailMap
                 mapCenter={this.state.mapCenter}
               />

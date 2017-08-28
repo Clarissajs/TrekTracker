@@ -13,10 +13,10 @@ class TrailMap extends React.Component {
     return (
       <GettingStartedGoogleMap
         containerElement={
-          <div style={{height: '300px', width: '300px'}} />
+          <div style={{height: '320px', width: `100%`}} />
         }
         mapElement={
-          <div style={{height: '300px', width: '300px'}} />
+          <div style={{ height: '320px', width: `100%`}} />
         }
         mapCenter={this.props.mapCenter}
       />
