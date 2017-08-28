@@ -5,7 +5,6 @@ import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
 import helpers from '../helpers/helpers';
 import axios from 'axios';
-import Avatar from 'material-ui/Avatar';
 
 var styles = {
   borderRadius: '50%',
@@ -40,8 +39,7 @@ class Navbar extends React.Component {
   componentDidMount() {
     axios.get('/api/currentuser')
     .then(response => {
-        this.setState({user: {displayName: response.data.firstname ?  `${response.data.firstname} ${response.data.lastname}` : this.state.user.displayName,
-                              imgUrl: response.data.photoUrl || this.state.user.imgUrl}
+        this.setState({user: {displayName: response.data.firstname ?  `${response.data.firstname} ${response.data.lastname}` : this.state.user.displayName, imgUrl: response.data.photoUrl || this.state.user.imgUrl}
         });
       })
     .catch(error => {
