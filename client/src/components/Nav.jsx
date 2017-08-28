@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
 import helpers from '../helpers/helpers';
 import axios from 'axios';
+import Avatar from 'material-ui/Avatar';
 
 var styles = {
   borderRadius: '50%',
@@ -66,6 +67,9 @@ class Navbar extends React.Component {
   }
 
   render () {
+    var styles = {
+      borderRadius: '50%',
+    }
     return (
       <div>
         <AppBar
