@@ -39,7 +39,7 @@ class Upload extends React.Component {
   }
 
   render() {
-    console.log('UPLOAD STATE', this.state)
+    console.log('[UPLOAD] this.props.toggleUpdatePosts is', this.props.toggleUpdatePosts);
     return(
       <Paper className='view-upload'>
         <form onSubmit={ this.submitImage }>
