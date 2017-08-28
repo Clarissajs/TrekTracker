@@ -22,15 +22,15 @@
   "trails": [
     {
       "id": 1,
-      "name": "testtrail",
-      "latitude": 1234,
-      "longitude": 5678
+      "name": "Purisma Creek",
+      "latitude": 37.45017,
+      "longitude": -122.33861
     },
     {
       "id": 2,
-      "name": "testtrail2",
-      "latitude": 12345,
-      "longitude": 56789
+      "name": "Eldridge Grade To East Peak Loop",
+      "latitude": 37.95794,
+      "longitude": -122.57348
     }
   ]
 }
