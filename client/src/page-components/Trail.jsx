@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import Posts from '../components/Posts.jsx';
 import Upload from '../components/Upload.jsx';
 import TrailMap from '../components/TrailMap.jsx';
+import Forecast from 'react-forecast';
 
 // const style = {
 //   margin: 5,
@@ -72,7 +73,8 @@ class Trail extends React.Component {
             </Paper>
           </Col>
         </Row>
-
+        {console.log(this.state.mapCenter.lat, this.state.mapCenter.lng, this.state.trailName)}
+        <Forecast latitude={this.state.mapCenter.lat} longitude={this.state.mapCenter.lng} name={this.state.trailName} />
         {this.state.currentUser ? <Upload /> : <Link to='/login'><RaisedButton label="Login to upload photos" primary={true}></RaisedButton></Link>}
         <hr/>
         <Posts posts={this.state.posts}/>
@@ -82,4 +84,3 @@ class Trail extends React.Component {
 }
 
 export default Trail;
-
