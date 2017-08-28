@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import Paper from 'material-ui/Paper';
+import { Paper, Card, Button} from 'material-ui';
+import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import Posts from '../components/Posts.jsx';
 import Upload from '../components/Upload.jsx';
@@ -49,23 +50,26 @@ class Trail extends React.Component {
 
   render() {
     return (
-      <div>
-        <Paper>
-          <h1>{this.state.trailName}</h1>
-          <div className='trail-left'>
-            <h3>{this.state.trailDescription}</h3>
-          </div>
-          <div className='trail-right'>
-            <h3>Testing map</h3>
-            <TrailMap
-              mapCenter={this.state.mapCenter}
-            />
-          </div>
-        </Paper>
-
+      <Container>
+        <Row>
+          <Col md="6">
+            <Paper>
+              <h1>{this.state.trailName}</h1>
+              <h3>{this.state.trailDescription}</h3>
+            </Paper>
+          </Col>
+          <Col md="6">
+            <Paper className='trail-right'>
+              <h3>Testing map</h3>
+              <TrailMap
+                mapCenter={this.state.mapCenter}
+              />
+            </Paper>
+          </Col>
+        </Row>
         {this.state.currentUser ? <Upload /> : <div><Link to='/login'>Login to upload your photos</Link></div>}
         <Posts posts={this.state.posts}/>
-      </div>
+      </Container>
     );
   }
 }

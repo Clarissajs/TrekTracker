@@ -11,6 +11,7 @@ import { lightBaseTheme, MuiThemeProvider, getMuiTheme } from 'material-ui/style
 import './styles.css';
 axios.defaults.headers.common['Authorization'] = 'Client-ID 3ec73e8df33fffc';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+import 'bootstrap/dist/css/bootstrap.css';
 
 class App extends React.Component {
   render() {
