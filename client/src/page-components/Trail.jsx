@@ -27,7 +27,16 @@ class Trail extends React.Component {
       }
     };
 
-    axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
+    axios.get('/api/currentuser')
+    .then((response) => {
+      if (response.data) {
+        this.setState({currentUser: response.data});
+      }
+    });
+  }
+
+  componentDidMount() {
+     axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
     .then((response) => {
       console.log('Res back from get posts/trails', response.data)
       if (response.data[0].poster) {
@@ -44,16 +53,10 @@ class Trail extends React.Component {
         }
       })
     });
-
-    axios.get('/api/currentuser')
-    .then((response) => {
-      if (response.data) {
-        this.setState({currentUser: response.data});
-      }
-    });
   }
 
   render() {
+    console.log('State!', this.state)
     return (
       <Container>
         <Row>
@@ -72,8 +75,8 @@ class Trail extends React.Component {
             </Paper>
           </Col>
         </Row>
-
-        {this.state.currentUser ? <Upload /> : <Link to='/login'><RaisedButton label="Login to upload photos" primary={true}></RaisedButton></Link>}
+        <hr/>
+        {this.state.currentUser ? <Upload mapCenter={this.state.mapCenter}/> : <Link to='/login'><RaisedButton label="Login to upload photos" primary={true}></RaisedButton></Link>}
         <hr/>
         <Posts posts={this.state.posts}/>
       </Container>
