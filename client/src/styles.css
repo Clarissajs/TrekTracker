@@ -46,6 +46,10 @@ body {
   margin: 10px 0;
 }
 
+.view-upload {
+  padding: 2%;
+}
+
 /* Shared */
 .loginBtn {
   box-sizing: border-box;
@@ -111,4 +115,5 @@ body {
 
 .trail-description {
   padding: 5%;
+  height: 100%;
 }

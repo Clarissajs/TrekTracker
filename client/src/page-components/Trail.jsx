@@ -1,11 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import { Paper, Card, Button} from 'material-ui';
+import { Paper, Card, RaisedButton} from 'material-ui';
 import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import Posts from '../components/Posts.jsx';
 import Upload from '../components/Upload.jsx';
 import TrailMap from '../components/TrailMap.jsx';
+
+// const style = {
+//   margin: 5,
+
+// }
 
 class Trail extends React.Component {
   constructor(props) {
@@ -60,14 +65,16 @@ class Trail extends React.Component {
             </Paper>
           </Col>
           <Col md="6">
-            <Paper className='trail-map'>
+            <Paper>
               <TrailMap
                 mapCenter={this.state.mapCenter}
               />
             </Paper>
           </Col>
         </Row>
-        {this.state.currentUser ? <Upload /> : <div><Link to='/login'>Login to upload your photos</Link></div>}
+
+        {this.state.currentUser ? <Upload /> : <Link to='/login'><RaisedButton label="Login to upload photos" primary={true}></RaisedButton></Link>}
+        <hr/>
         <Posts posts={this.state.posts}/>
       </Container>
     );
