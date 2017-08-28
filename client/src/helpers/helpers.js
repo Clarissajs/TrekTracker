@@ -172,8 +172,8 @@ module.exports.submitImage = function(e) {
       text: document.getElementsByTagName('textarea')[0].value,
       image_url: res.data.data.link,
       flag_comments: [],
-      latitude: this.state.lng,
-      longitude: this.state.lat,
+      latitude: this.state.lat,
+      longitude: this.state.lng,
       trail_id: this.state.trailId,
     };
     return axios.post('/api/posts', {photo: metaPhoto})
