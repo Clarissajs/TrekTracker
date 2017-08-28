@@ -24,7 +24,8 @@ class Trail extends React.Component {
       mapCenter: {
        lat: 37.783697,
        lng: -122.408966
-      }
+      },
+      updatePosts: false
     };
 
     axios.get('/api/currentuser')
@@ -55,8 +56,14 @@ class Trail extends React.Component {
     });
   }
 
+  toggleUpdatePosts () {
+    this.setState({
+      updatePosts: !this.state.updatePosts
+    })
+  }
+
   render() {
-    console.log('State!', this.state)
+    console.log('[TRAIL COMPONENT]: this.state.updatePosts', this.state.updatePosts);
     return (
       <Container>
         <Row>
@@ -85,4 +92,3 @@ class Trail extends React.Component {
 }
 
 export default Trail;
-
