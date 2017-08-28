@@ -211,6 +211,8 @@ module.exports.run = () => {
           expect(post.title).to.equal(title);
           expect(post.text).to.equal(text);
           expect(post.image_url).to.equal(imageUrl);
+          expect(post.latitude).to.be.within(-90, 90);
+          expect(post.longitude).to.be.within(-180, 180);
         });
       });
       it('Should reject when title is not a string', () => {

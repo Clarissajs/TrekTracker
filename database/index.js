@@ -140,7 +140,6 @@ module.exports.getPostsByTrailId = (id) => {
     where: {trail_id: id}
   })
   .then((posts) => {
-    console.log('POSTS', posts)
     if (posts.length === 0) {
       return models.trails.findOne({
         where: {id}
@@ -153,7 +152,9 @@ module.exports.getPostsByTrailId = (id) => {
         resObj.trail = {
           id: trail.dataValues.id,
           name: trail.dataValues.name,
-          directions: trail.dataValues.directions
+          directions: trail.dataValues.directions,
+          latitude: parseFloat(trail.dataValues.latitude),
+          longitude: parseFloat(trail.dataValues.longitude)
         };
         res.push(resObj)
         return res;
