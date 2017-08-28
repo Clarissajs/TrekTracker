@@ -1,7 +1,7 @@
 import React from 'react';
 import { updateImage, submitImage } from '../helpers/helpers.js';
 import gps from '../helpers/gps.js';
-import Paper from 'material-ui/Paper';
+import { Paper, RaisedButton } from 'material-ui';
 
 class Upload extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Upload extends React.Component {
 
   render() {
     return(
-      <Paper>
+      <Paper className='view-upload'>
         <form onSubmit={ this.submitImage }>
           <h2>Upload trek pic!</h2>
           <input className='input' onChange={(e) => this.updateImage(e)} type='file' accept='image/*' capture='camera' />

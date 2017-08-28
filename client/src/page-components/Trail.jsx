@@ -1,9 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import Paper from 'material-ui/Paper';
+import { Paper, Card, RaisedButton} from 'material-ui';
+import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import Posts from '../components/Posts.jsx';
 import Upload from '../components/Upload.jsx';
+import TrailMap from '../components/TrailMap.jsx';
+
+// const style = {
+//   margin: 5,
+
+// }
 
 class Trail extends React.Component {
   constructor(props) {
@@ -14,7 +21,10 @@ class Trail extends React.Component {
       trailDescription: null,
       posts: [],
       currentUser: null,
-      noPosts: false
+      mapCenter: {
+       lat: 37.783697,
+       lng: -122.408966
+      }
     };
 
     axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
@@ -23,15 +33,16 @@ class Trail extends React.Component {
       if (response.data[0].poster) {
         this.setState({
           posts: response.data,
-          trailName: response.data[0].trail.name,
-          trailDescription: response.data[0].trail.directions,
         });
-      } else {
-        this.setState({
-          trailName: response.data[0].trail.name,
-          trailDescription: response.data[0].trail.directions,
-        })
       }
+      this.setState({
+        trailName: response.data[0].trail.name,
+        trailDescription: response.data[0].trail.directions,
+        mapCenter: {
+          lat: response.data[0].latitude,
+          lng: response.data[0].longitude
+        }
+      })
     });
 
     axios.get('/api/currentuser')
@@ -44,18 +55,28 @@ class Trail extends React.Component {
 
   render() {
     return (
-      <div>
-        <Paper>
-          <h1>{this.state.trailName}</h1>
-          <div>
-            <h3>{this.state.trailDescription}</h3>
-          </div>
-          <div>
-          </div>
-        </Paper>
-        {this.state.currentUser ? <Upload /> : <div><Link to='/login'>Login to upload your photos</Link></div>}
+      <Container>
+        <Row>
+          <Col md="6">
+            <Paper className='trail-description'>
+              <h2>{this.state.trailName}</h2>
+              <hr/>
+              <p>{this.state.trailDescription}</p>
+            </Paper>
+          </Col>
+          <Col md="6">
+            <Paper>
+              <TrailMap
+                mapCenter={this.state.mapCenter}
+              />
+            </Paper>
+          </Col>
+        </Row>
+
+        {this.state.currentUser ? <Upload /> : <Link to='/login'><RaisedButton label="Login to upload photos" primary={true}></RaisedButton></Link>}
+        <hr/>
         <Posts posts={this.state.posts}/>
-      </div>
+      </Container>
     );
   }
 }
