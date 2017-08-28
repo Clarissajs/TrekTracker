@@ -1,14 +1,14 @@
 {
     "development": {
-        "username": "student",
-        "password": null,
+        "username": "root",
+        "password": "",
         "database": "trektracker",
         "host": "localhost",
         "dialect": "mysql"
     },
     "test": {
         "username": "root",
-        "password": null,
+        "password": "",
         "database": "trektracker",
         "host": "localhost",
         "dialect": "mysql"

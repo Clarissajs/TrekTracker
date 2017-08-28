@@ -73,7 +73,6 @@ class Navbar extends React.Component {
           onLeftIconButtonTouchTap={this.handleToggle}
           iconElementRight= {(<div>
             <div style={txtStyle}>  {this.state.user.displayName}
-            {console.log(this.state.user.imgUrl)}
               <Avatar
                src={this.state.user.imgUrl}
                size={50}

@@ -6,11 +6,7 @@ import { Link } from 'react-router-dom'
 import Posts from '../components/Posts.jsx';
 import Upload from '../components/Upload.jsx';
 import TrailMap from '../components/TrailMap.jsx';
-
-// const style = {
-//   margin: 5,
-
-// }
+import Weather from '../components/Weather.jsx';
 
 class Trail extends React.Component {
   constructor(props) {
@@ -55,8 +51,11 @@ class Trail extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+
+  }
+
   render() {
-    console.log('State!', this.state)
     return (
       <Container>
         <Row>
@@ -76,6 +75,8 @@ class Trail extends React.Component {
           </Col>
         </Row>
         <hr/>
+          <Weather mapCenter={this.state.mapCenter} trailName={this.state.trailName} />
+        <hr/>
         {this.state.currentUser ? <Upload mapCenter={this.state.mapCenter}/> : <Link to='/login'><RaisedButton label="Login to upload photos" primary={true}></RaisedButton></Link>}
         <hr/>
         <Posts posts={this.state.posts}/>
@@ -85,4 +86,3 @@ class Trail extends React.Component {
 }
 
 export default Trail;
-
