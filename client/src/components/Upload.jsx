@@ -9,19 +9,28 @@ class Upload extends React.Component {
     this.state = {
       photo: null,
       trailId: window.location.href.split('id=')[1],
-      lat: null,
-      lng: null,
+      lat: this.props.mapCenter.lat,
+      lng: this.props.mapCenter.lng
     }
     this.submitImage = submitImage.bind(this);
     this.updateImage = updateImage.bind(this);
   }
 
-  componentWillMount() {
-    gps.getLocation()
-    .then(value => {
-      this.setState({lat: value.coords.latitude, lng: value.coords.longitude})
-    })
-    .catch(err => console.log('location access denied: ', err));
+  // componentWillMount() {
+  //   gps.getLocation()
+  //   .then(value => {
+  //     this.setState({lat: value.coords.latitude, lng: value.coords.longitude})
+  //   })
+  //   .catch(err => console.log('location access denied: ', err));
+  // }
+
+  componentWillReceiveProps(nextProps) {
+    if(this.props !== nextProps) {
+      this.setState({
+        lat: nextProps.mapCenter.lat,
+        lng: nextProps.mapCenter.lng
+      })
+    }
   }
 
   componentDidMount() {
@@ -30,6 +39,7 @@ class Upload extends React.Component {
   }
 
   render() {
+    console.log('UPLOAD STATE', this.state)
     return(
       <Paper className='view-upload'>
         <form onSubmit={ this.submitImage }>

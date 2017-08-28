@@ -8,6 +8,7 @@ class TrailMap extends React.Component {
     super(props);
   }
 
+
   render() {
     console.log('PROPS in Trailmap', this.props)
     return (

@@ -1,9 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import Paper from 'material-ui/Paper';
+import { Paper, Card, RaisedButton} from 'material-ui';
+import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import Posts from '../components/Posts.jsx';
 import Upload from '../components/Upload.jsx';
+import TrailMap from '../components/TrailMap.jsx';
+import Forecast from 'react-forecast';
+// const style = {
+//   margin: 5,
+
+// }
 
 class Trail extends React.Component {
   constructor(props) {
@@ -14,25 +21,11 @@ class Trail extends React.Component {
       trailDescription: null,
       posts: [],
       currentUser: null,
-      noPosts: false
-    };
-
-    axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
-    .then((response) => {
-      console.log('Res back from get posts/trails', response.data)
-      if (response.data[0].poster) {
-        this.setState({
-          posts: response.data,
-          trailName: response.data[0].trail.name,
-          trailDescription: response.data[0].trail.directions,
-        });
-      } else {
-        this.setState({
-          trailName: response.data[0].trail.name,
-          trailDescription: response.data[0].trail.directions,
-        })
+      mapCenter: {
+       lat: 37.783697,
+       lng: -122.408966
       }
-    });
+    };
 
     axios.get('/api/currentuser')
     .then((response) => {
@@ -42,20 +35,58 @@ class Trail extends React.Component {
     });
   }
 
+  componentDidMount() {
+     axios.get('/api/posts/trails/' + this.state.trailId, {params:{trailId:this.state.trailId}})
+    .then((response) => {
+      console.log('Res back from get posts/trails', response.data)
+      if (response.data[0].poster) {
+        this.setState({
+          posts: response.data,
+        });
+      }
+      this.setState({
+        trailName: response.data[0].trail.name,
+        trailDescription: response.data[0].trail.directions,
+        mapCenter: {
+          lat: response.data[0].latitude,
+          lng: response.data[0].longitude
+        }
+      })
+    });
+  }
+
+  componentDidUpdate() {
+
+  }
+
   render() {
+    console.log('State!', this.state)
     return (
-      <div>
-        <Paper>
-          <h1>{this.state.trailName}</h1>
-          <div>
-            <h3>{this.state.trailDescription}</h3>
-          </div>
-          <div>
-          </div>
-        </Paper>
-        {this.state.currentUser ? <Upload /> : <div><Link to='/login'>Login to upload your photos</Link></div>}
+      <Container>
+        <Row>
+          <Col md="6">
+            <Paper className='trail-description'>
+              <h2>{this.state.trailName}</h2>
+              <hr/>
+              <p>{this.state.trailDescription}</p>
+            </Paper>
+          </Col>
+          <Col md="6">
+            <Paper>
+              <TrailMap
+                mapCenter={this.state.mapCenter}
+              />
+            </Paper>
+          </Col>
+        </Row>
+        <hr/>
+          {console.log(`We are at: ${this.state.mapCenter.lat}, ${this.state.mapCenter.lng} in the park of ${this.state.trailName}`)}
+          <Forecast latitude={this.state.mapCenter.lat} longitude={this.state.mapCenter.lng} name={this.state.trailName} />
+        <hr/>
+        {this.state.currentUser ? <Upload mapCenter={this.state.mapCenter}/> : <Link to='/login'><RaisedButton label="Login to upload photos" primary={true}></RaisedButton></Link>}
+        <hr/>
         <Posts posts={this.state.posts}/>
-      </div>
+      </Container>
     );
   }
 }
