@@ -1,5 +1,6 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
+import Avatar from 'material-ui/Avatar';
 import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
 import helpers from '../helpers/helpers';
@@ -73,7 +74,10 @@ class Navbar extends React.Component {
           iconElementRight= {(<div>
             <div style={txtStyle}>  {this.state.user.displayName}
             {console.log(this.state.user.imgUrl)}
-              <img src={this.state.user.imgUrl}style={styles}/>
+              <Avatar
+               src={this.state.user.imgUrl}
+               size={50}
+              />
             </div>
             </div>)}
         />
