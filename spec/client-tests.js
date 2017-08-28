@@ -3,7 +3,7 @@ let helpers = require('../client/src/helpers/helpers.js');
 
 module.exports.run = function() {
   describe('grabPhofilePhoto()', () => {
-    it('Should retrive user data from google API', () => {
+    it('Should retrieve user data from google API', () => {
       return helpers.grabPhofilePhoto()
       .then((user) => {
         console.log(user);
