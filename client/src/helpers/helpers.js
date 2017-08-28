@@ -161,6 +161,10 @@ module.exports.handlePlacesChanged = function ()  {
   this.onDragEnd({});
  }
 
+function refreshPage() {
+   window.location.reload();
+ }
+
 module.exports.submitImage = function(e) {
   e.preventDefault();
   var form = new FormData();
