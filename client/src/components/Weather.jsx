@@ -23,9 +23,9 @@ class Weather extends React.Component{
 
   render(){
     return (
-      <Forecast latitude={37} longitude={-122} name={'the Bat-Trail'} />
+      <Forecast latitude={this.state.lat} longitude={this.state.lng} name={this.state.trailName} />
     );
   }
 };
 
-export default Weather
+export default Weather;
