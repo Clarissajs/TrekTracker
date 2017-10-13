@@ -51,9 +51,6 @@ class Trail extends React.Component {
     });
   }
 
-  componentDidUpdate() {
-
-  }
 
   render() {
     return (

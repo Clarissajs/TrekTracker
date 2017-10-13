@@ -17,6 +17,8 @@ var txtStyle = {
   textAlign: 'right'
 }
 
+var avatarStyle = {margin: 10};
+
 class Navbar extends React.Component {
   constructor (props) {
     super(props);
@@ -72,10 +74,12 @@ class Navbar extends React.Component {
           title="TrekTracker"
           onLeftIconButtonTouchTap={this.handleToggle}
           iconElementRight= {(<div>
-            <div style={txtStyle}>  {this.state.user.displayName}
+            <div style={txtStyle}>
+              {this.state.user.displayName}
               <Avatar
                src={this.state.user.imgUrl}
                size={50}
+               style={avatarStyle}
               />
             </div>
             </div>)}
